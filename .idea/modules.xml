@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/consoleapp/DZ1_Java.consoleapp.iml" filepath="$PROJECT_DIR$/.idea/modules/consoleapp/DZ1_Java.consoleapp.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/library/DZ1_Java.library.iml" filepath="$PROJECT_DIR$/.idea/modules/library/DZ1_Java.library.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DZ1_Java.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DZ1_Java.main.iml" />
     </modules>
