@@ -1,3 +1,0 @@
-rootProject.name = 'DZ1_Java'
-include 'library'
-include 'consoleapp'

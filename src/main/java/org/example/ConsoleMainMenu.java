@@ -1,4 +1,4 @@
-import java.util.Scanner;
+package org.example;
 
 public class ConsoleMainMenu {
 
@@ -31,5 +31,4 @@ public class ConsoleMainMenu {
             }
         }
     }
- 
 }
