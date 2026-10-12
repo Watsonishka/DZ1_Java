@@ -6,28 +6,38 @@ public class ConsoleMainMenu {
 
     public static void GetMenuChoice()
     {
-        Scanner scanner = new Scanner(System.in);
+        var scanner = new Scanner(System.in);
 
         while (true) {
             Show();
             System.out.print("Введите целое число: ");
-            String answer = scanner.nextLine();
+            int answer;
 
-            if (answer.equals("1")) {
+            try {
+                answer= Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка: введено не число! Введите целое число от 0 до 4!");
+                continue;
+            }
+
+            if (answer == 1){
                 System.out.println("Вызов функции 1 (Ручной ввод)");
             }
-            else if (answer.equals("2")) {
+            else if (answer == 2){
                 System.out.println("Вызов функции 2 (Загрузка из файла)");
             }
-            else if (answer.equals("3")) {
+            else if(answer == 3){
                 System.out.println("Вызов функции 3 (Обработка Stream API)");
             }
-            else if (answer.equals("0")) { // Сделали 0, как в тексте меню
+            else if(answer == 4){
+                System.out.println("Вызов функции 4 (Обработка Stream API)");
+            }
+            else if (answer == 0){
                 System.out.println("Выход из программы...");
                 System.exit(0);
             }
             else {
-                System.out.println("Введена неизвестная команда! Введите число от 0 до 3!");
+                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 4!");
             }
         }
     }
@@ -38,9 +48,10 @@ public class ConsoleMainMenu {
             
             ===== МЕНЮ =====
             1. Добавить данные вручную
-            2. Загрузить данные из файла
+            2. Добавить данные из файла
             3. Обработать данные
-            4. Выход
+            4. Вывести список данных на консоль
+            0. Выход
             """);
     }
 }
