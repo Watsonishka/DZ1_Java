@@ -30,7 +30,17 @@ public class ConsoleMainMenu {
                 System.out.println("Вызов функции 3 (Обработка Stream API)");
             }
             else if(answer == 4){
-                System.out.println("Вызов функции 4 (Обработка Stream API)");
+                var cars = CarRepository.GetAll();
+                if (cars == null || cars.isEmpty()){
+                    System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
+                }
+                else{
+                    for (var i = 0; i < cars.size(); i++){
+                        System.out.println((i + 1)+ ". Марка: " + cars.get(i).getModel()
+                                + ", мощность: " + cars.get(i).getPower()
+                                + ", год выпуска: " + cars.get(i).getManufacturedYear());
+                    }
+                }
             }
             else if (answer == 0){
                 System.out.println("Выход из программы...");
