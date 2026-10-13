@@ -36,9 +36,9 @@ public class ConsoleMainMenu {
                 }
                 else{
                     for (var i = 0; i < cars.size(); i++){
-                        System.out.println((i + 1)+ ". Марка: " + cars.get(i).getModel()
-                                + ", мощность: " + cars.get(i).getPower()
-                                + ", год выпуска: " + cars.get(i).getManufacturedYear());
+                        System.out.println((i + 1)+ ".Марка:" + cars.get(i).getModel()
+                                + ", мощность:" + cars.get(i).getPower()
+                                + ", год выпуска:" + cars.get(i).getManufacturedYear());
                     }
                 }
             }
