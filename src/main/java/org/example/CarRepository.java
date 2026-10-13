@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CarRepository {
-    private final List<Car> cars = new ArrayList<>();
+    private static final List<Car> cars = new ArrayList<>();
 
-    public List<Car> GetAll() {
+    public static List<Car> GetAll() {
         return cars;
     }
 

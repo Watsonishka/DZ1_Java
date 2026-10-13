@@ -21,7 +21,7 @@ public class ConsoleMainMenu {
             }
 
             if (answer == 1){
-                System.out.println("Вызов функции 1 (Ручной ввод)");
+                ConsoleInput.AddCar();
             }
             else if (answer == 2){
                 System.out.println("Вызов функции 2 (Загрузка из файла)");
