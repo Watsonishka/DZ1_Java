@@ -24,7 +24,13 @@ public class ConsoleMainMenu {
                 ConsoleInput.AddCar();
             }
             else if (answer == 2){
-                System.out.println("Вызов функции 2 (Загрузка из файла)");
+                System.out.print("Введите имя файла (например, car.json): ");
+                String fileName = scanner.nextLine();
+                String filePath = CarRepository.class
+                        .getResource("/" + fileName)
+                        .getPath();
+
+                CarRepository.addCarsFromFile(filePath);
             }
             else if(answer == 3){
                 System.out.println("Вызов функции 3 (Обработка Stream API)");

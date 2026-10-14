@@ -83,6 +83,16 @@ public class ConsoleInput {
         }
     }
 
+    public static String extractStringValue(String line) {
+        int start = line.indexOf(':') + 1;
+        return line.substring(start).replace("\"", "").replace(",", "").trim();
+    }
+
+    public static String extractNumericValue(String line) {
+        int start = line.indexOf(':') + 1;
+        return line.substring(start).replace(",", "").trim();
+    }
+
     private static Boolean getConfirmation(Scanner scanner, String question) {
         while (true) {
             System.out.println(question);
