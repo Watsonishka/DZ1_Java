@@ -3,9 +3,8 @@ import java.util.Scanner;
 
 public class ConsoleInput {
 
-    public static void AddCar() {
+    public static void AddCar(Scanner scanner) {
         var cars = CarRepository.GetAll();
-        var scanner = new Scanner(System.in);
 
         while (true) {
             String model;
@@ -83,17 +82,36 @@ public class ConsoleInput {
         }
     }
 
-    public static String extractStringValue(String line) {
-        int start = line.indexOf(':') + 1;
-        return line.substring(start).replace("\"", "").replace(",", "").trim();
+    public static void AddCarFromJSON(Scanner scanner) {
+        System.out.print("Введите имя файла (например, car.json): ");
+        var fileName = scanner.nextLine().trim();
+        var cars = CarRepository.getCarsFromFile("/" + fileName);
+
+        if (cars == null || cars.isEmpty()) {
+            System.out.println("Файл пуст или не найден.");
+            return;
+        }
+
+        System.out.println("Полученный результат:");
+        CarRepository.printCars(cars);
+
+        while (true) {
+            var confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
+            if (confirmed == null) {
+                System.out.println("Ошибка: введите 'Да' или 'Нет'.");
+                continue;
+            }
+            if (!confirmed) {
+                System.out.println("Добавление отменено.");
+                return;
+            }
+            CarRepository.addCars(cars);
+            System.out.println("Добавление объектов выполнено успешно!");
+            break;
+        }
     }
 
-    public static String extractNumericValue(String line) {
-        int start = line.indexOf(':') + 1;
-        return line.substring(start).replace(",", "").trim();
-    }
-
-    private static Boolean getConfirmation(Scanner scanner, String question) {
+    static Boolean getConfirmation(Scanner scanner, String question) {
         while (true) {
             System.out.println(question);
             var answer = scanner.nextLine().trim().toLowerCase();

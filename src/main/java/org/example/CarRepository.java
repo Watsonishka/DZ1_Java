@@ -1,9 +1,6 @@
 package org.example;
 import java.util.ArrayList;
 import java.util.List;
-import static org.example.ConsoleInput.extractNumericValue;
-import static org.example.ConsoleInput.extractStringValue;
-import static org.example.FileManager.readFromTextFile;
 
 public class CarRepository {
     private static final List<Car> cars = new ArrayList<>();
@@ -17,26 +14,22 @@ public class CarRepository {
         cars.add(car);
     }
 
-    public static void addCarsFromFile (String filePath){
-        var lines = readFromTextFile(filePath);
+    public static void addCars(List<Car> newCars) {cars.addAll(newCars);}
 
-        String currentModel = "";
-        double currentPower = 0;
-        int currentYear = 0;
+    public static List<Car> getCarsFromFile(String resourceName) {
+        return FileManager.readCarsFromResource(resourceName);
+    }
 
-        for (String line : lines) {
-            line = line.trim();
+    public static void printCars(List<Car> cars) {
+        if (cars == null || cars.isEmpty()) {
+            System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
+            return;
+        }
 
-            if (line.contains("model")) {
-                currentModel = extractStringValue(line);
-            }
-            else if (line.contains("power")) {
-                currentPower = Double.parseDouble(extractNumericValue(line));
-            }
-            else if (line.contains("manufacturedYear") || line.contains("year")) {
-                currentYear = Integer.parseInt(extractNumericValue(line));
-            }
-            cars.add(new Car(currentModel, currentPower, currentYear));
+        for (var i = 0; i < cars.size(); i++) {
+            System.out.println((i + 1) + ".Марка:" + cars.get(i).getModel()
+                    + ", мощность:" + cars.get(i).getPower()
+                    + ", год выпуска:" + cars.get(i).getManufacturedYear());
         }
     }
 }

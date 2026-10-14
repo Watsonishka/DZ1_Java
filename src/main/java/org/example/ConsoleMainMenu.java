@@ -21,32 +21,16 @@ public class ConsoleMainMenu {
             }
 
             if (answer == 1){
-                ConsoleInput.AddCar();
+                ConsoleInput.AddCar(scanner);
             }
             else if (answer == 2){
-                System.out.print("Введите имя файла (например, car.json): ");
-                String fileName = scanner.nextLine();
-                String filePath = CarRepository.class
-                        .getResource("/" + fileName)
-                        .getPath();
-
-                CarRepository.addCarsFromFile(filePath);
+                ConsoleInput.AddCarFromJSON(scanner);
             }
             else if(answer == 3){
                 System.out.println("Вызов функции 3 (Обработка Stream API)");
             }
             else if(answer == 4){
-                var cars = CarRepository.GetAll();
-                if (cars == null || cars.isEmpty()){
-                    System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
-                }
-                else{
-                    for (var i = 0; i < cars.size(); i++){
-                        System.out.println((i + 1)+ ".Марка:" + cars.get(i).getModel()
-                                + ", мощность:" + cars.get(i).getPower()
-                                + ", год выпуска:" + cars.get(i).getManufacturedYear());
-                    }
-                }
+                CarRepository.printCars(CarRepository.GetAll());
             }
             else if (answer == 0){
                 System.out.println("Выход из программы...");

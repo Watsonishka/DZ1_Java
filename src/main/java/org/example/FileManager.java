@@ -1,25 +1,25 @@
 package org.example;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
+import java.io.InputStream;
 import java.util.List;
 
 public class FileManager {
 
-    public static List<String> readFromTextFile(String filePath) {
-        List<String> fileLines = new ArrayList<>();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath, StandardCharsets.UTF_8))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                fileLines.add(line);
+    public static List<Car> readCarsFromResource(String resourceName) {
+        try (InputStream in = FileManager.class.getResourceAsStream(resourceName)) {
+            if (in == null) {
+                System.out.println("Ресурс не найден: " + resourceName);
+                return List.of();
             }
+            return mapper.readValue(in, new TypeReference<List<Car>>() {});
         }
         catch (IOException e) {
-            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+            System.out.println("Ошибка при чтении: " + e.getMessage());
+            return List.of();
         }
-        return fileLines;
     }
 }

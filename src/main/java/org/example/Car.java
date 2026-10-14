@@ -11,6 +11,7 @@ public class Car {
         this.power = power;
         this.manufacturedYear = manufacturedYear;
     }
+    public Car() {}
 
     public String getModel() {
         return model;
