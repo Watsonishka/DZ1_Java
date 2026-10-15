@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleMainMenu {
@@ -27,17 +28,11 @@ public class ConsoleMainMenu {
                 handleFilterMenu(scanner);
             }
             else if(answer == 4){
+                handleSortMenu(scanner);
             }
             else if(answer == 5){
-            }
-            else if(answer == 6){
-                var cars = CarRepository.getCarDescriptions(CarRepository.GetAll());
-                if (cars == null || cars.isEmpty()) {
-                    System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
-                }
-                else {
-                    System.out.println(cars);
-                }
+                var cars = CarRepository.GetAll();
+                printCarDescriptions(cars);
             }
             else if (answer == 0){
                 System.out.println("Выход из программы...");
@@ -68,7 +63,7 @@ public class ConsoleMainMenu {
                     System.out.println("По данному запросу ничего не найдено");
                 }
                 else {
-                    CarRepository.getCarDescriptions(filteredCars);
+                    System.out.println(CarRepository.getCarDescriptions(filteredCars));
                 }
             }
             else if (answer == 2) {
@@ -86,6 +81,39 @@ public class ConsoleMainMenu {
         }
     }
 
+    private static void handleSortMenu(Scanner scanner) {
+        int answer;
+        while(true) {
+            showSortMenu();
+            try {
+                answer = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка: введено не число! Введите целое число от 0 до 1!");
+                continue;
+            }
+
+            if (answer == 1) {
+                var cars = CarRepository.sortByModel();
+                printCarDescriptions(cars);
+            }
+            else if (answer == 0) {
+                return;
+            }
+            else {
+                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 3!");
+            }
+        }
+    }
+
+    public static void printCarDescriptions(List<Car> cars){
+        if (cars == null || cars.isEmpty()) {
+            System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
+        }
+        else {
+            System.out.println(CarRepository.getCarDescriptions(cars));
+        }
+    }
+
     private static void show(){
         System.out.println("""
             
@@ -93,12 +121,11 @@ public class ConsoleMainMenu {
             1. Добавить данные вручную
             2. Добавить данные из файла
             3. Фильтрация данных
-            4. Преобразование данных
-            5. Сортировка данных
-            6. Вывести список данных на консоль
+            4. Сортировка данных
+            5. Вывести список данных на консоль
             0. Выход
             
-            "Введите целое число: "
+            Введите целое число:
             """);
     }
 
@@ -111,7 +138,18 @@ public class ConsoleMainMenu {
             3. Фильтровать по году выпуска
             0. Назад
             
-            "Введите целое число: "
+            Введите целое число:
+            """);
+    }
+
+    private static void showSortMenu(){
+        System.out.println("""
+            
+            ===== СОРТИРОВКА =====
+            1. Сортировка по модели в алфавитном порядке
+            0. Назад
+            
+            Введите целое число:
             """);
     }
 }

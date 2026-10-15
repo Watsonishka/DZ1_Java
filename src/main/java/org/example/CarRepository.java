@@ -1,6 +1,6 @@
 package org.example;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,6 +38,12 @@ public class CarRepository {
     public static List<Car> filterCarsByYear(int year) {
         return cars.stream()
                 .filter(car -> car.getManufacturedYear() == year)
+                .toList();
+    }
+
+    public static List<Car> sortByModel() {
+        return cars.stream()
+                .sorted(Comparator.comparing(Car::getModel))
                 .toList();
     }
 
