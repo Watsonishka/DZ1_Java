@@ -29,6 +29,8 @@ public class ConsoleMainMenu {
             else if(answer == 4){
             }
             else if(answer == 5){
+            }
+            else if(answer == 6){
                 ConsoleInput.printCars(CarRepository.GetAll());
             }
             else if (answer == 0){
@@ -85,7 +87,8 @@ public class ConsoleMainMenu {
             2. Добавить данные из файла
             3. Фильтрация данных
             4. Преобразование данных
-            5. Вывести список данных на консоль
+            5. Сортировка данных
+            6. Вывести список данных на консоль
             0. Выход
             
             "Введите целое число: "

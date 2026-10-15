@@ -24,10 +24,15 @@ public class ConsoleInput {
                 System.out.println("Введите мощность машины. Вводите только числа (можно дробные):");
                 try {
                     power = Double.parseDouble(scanner.nextLine().replace(',', '.'));
-                    break;
                 } catch (NumberFormatException e) {
                     System.out.println("Ошибка: введено не число! Попробуйте снова!");
+                    continue;
                 }
+                if (power <= 0) {
+                    System.out.println("Ошибка: Мощность не может быть отрицательной!. Попробуйте снова!");
+                    continue;
+                }
+                break;
             }
 
             int manufacturedYear;
