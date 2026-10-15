@@ -29,18 +29,6 @@ public class CarRepository {
                 .toList();
     }
 
-    public static List<Car> filterCarsByPower(double minPower) {
-        return cars.stream()
-                .filter(car -> car.getPower() >= minPower)
-                .toList();
-    }
-
-    public static List<Car> filterCarsByYear(int year) {
-        return cars.stream()
-                .filter(car -> car.getManufacturedYear() == year)
-                .toList();
-    }
-
     public static List<Car> sortByModel() {
         cars.sort(Comparator.comparing(Car::getModel));
         return cars;

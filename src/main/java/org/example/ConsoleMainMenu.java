@@ -6,13 +6,15 @@ public class ConsoleMainMenu {
 
     public static void getMenuChoice(){
         var scanner = new Scanner(System.in);
+
         while (true) {
             show();
             int answer;
 
             try {
                 answer= Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 System.out.println("Ошибка: введено не число! Введите целое число от 0 до 4!");
                 continue;
             }
@@ -45,11 +47,13 @@ public class ConsoleMainMenu {
 
     private static void handleFilterMenu(Scanner scanner) {
         int answer;
+
         while(true) {
             showFilterMenu();
             try {
                 answer = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 System.out.println("Ошибка: введено не число! Введите целое число от 0 до 4!");
                 continue;
             }
@@ -65,28 +69,24 @@ public class ConsoleMainMenu {
                     System.out.println(CarRepository.getCarDescriptions(filteredCars));
                 }
             }
-            else if (answer == 2) {
-
-            }
-            else if (answer == 3) {
-
-            }
             else if (answer == 0) {
                 return;
             }
             else {
-                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 3!");
+                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 1!");
             }
         }
     }
 
     private static void handleSortMenu(Scanner scanner) {
         int answer;
+
         while(true) {
             showSortMenu();
             try {
                 answer = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 System.out.println("Ошибка: введено не число! Введите целое число от 0 до 1!");
                 continue;
             }
@@ -133,8 +133,6 @@ public class ConsoleMainMenu {
             
             ===== ФИЛЬТРАЦИЯ =====
             1. Фильтровать по модели
-            2. Фильтровать по мощности
-            3. Фильтровать по году выпуска
             0. Назад
             
             Введите целое число:

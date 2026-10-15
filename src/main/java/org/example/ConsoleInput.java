@@ -1,8 +1,6 @@
 package org.example;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleInput {
@@ -15,6 +13,7 @@ public class ConsoleInput {
             while (true) {
                 System.out.println("Введите марку машины. Вводите буквы, цифры и знаки.");
                 model = scanner.nextLine().trim();
+
                 if (model.isEmpty()) {
                     System.out.println("Ошибка: марка не может быть пустой. Попробуйте снова!");
                     continue;
@@ -27,7 +26,8 @@ public class ConsoleInput {
                 System.out.println("Введите мощность машины. Вводите только числа (можно дробные):");
                 try {
                     power = Double.parseDouble(scanner.nextLine().replace(',', '.'));
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     System.out.println("Ошибка: введено не число! Попробуйте снова!");
                     continue;
                 }
@@ -124,6 +124,7 @@ public class ConsoleInput {
 
         while (true) {
             var confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
+
             if (confirmed == null) {
                 System.out.println("Ошибка: введите 'Да' или 'Нет'.");
                 continue;
@@ -142,6 +143,7 @@ public class ConsoleInput {
         while (true) {
             System.out.println(question);
             var answer = scanner.nextLine().trim().toLowerCase();
+
             if (answer.equals("да") || answer.equals("yes")) {
                 return true;
             }
