@@ -15,7 +15,7 @@ public class ConsoleMainMenu {
                 answer= Integer.parseInt(scanner.nextLine());
             }
             catch (NumberFormatException e) {
-                System.out.println("Ошибка: введено не число! Введите целое число от 0 до 4!");
+                System.out.println("Ошибка: введено не число! Введите целое число от 0 до 5!");
                 continue;
             }
 
