@@ -31,7 +31,13 @@ public class ConsoleMainMenu {
             else if(answer == 5){
             }
             else if(answer == 6){
-                ConsoleInput.printCars(CarRepository.GetAll());
+                var cars = CarRepository.getCarDescriptions(CarRepository.GetAll());
+                if (cars == null || cars.isEmpty()) {
+                    System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
+                }
+                else {
+                    System.out.println(cars);
+                }
             }
             else if (answer == 0){
                 System.out.println("Выход из программы...");
@@ -60,8 +66,9 @@ public class ConsoleMainMenu {
 
                 if (filteredCars == null || filteredCars.isEmpty()) {
                     System.out.println("По данному запросу ничего не найдено");
-                } else {
-                    ConsoleInput.printCars(filteredCars);
+                }
+                else {
+                    CarRepository.getCarDescriptions(filteredCars);
                 }
             }
             else if (answer == 2) {

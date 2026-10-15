@@ -1,6 +1,8 @@
 package org.example;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CarRepository {
     private static final List<Car> cars = new ArrayList<>();
@@ -37,5 +39,12 @@ public class CarRepository {
         return cars.stream()
                 .filter(car -> car.getManufacturedYear() == year)
                 .toList();
+    }
+
+    public static String getCarDescriptions(List<Car> carsList) {
+        return carsList.stream()
+                .map(car -> car.getModel() + " — " + car.getPower() + " л.с., "
+                        + car.getManufacturedYear() + " г.")
+                .collect(Collectors.joining("\n"));
     }
 }
