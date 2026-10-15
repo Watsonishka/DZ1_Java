@@ -20,16 +20,22 @@ public class CarRepository {
         return FileManager.readCarsFromResource(resourceName);
     }
 
-    public static void printCars(List<Car> cars) {
-        if (cars == null || cars.isEmpty()) {
-            System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
-            return;
-        }
+    public static List<Car> filterCarsByModel(String filter) {
+        var search = filter.trim().toLowerCase();
+        return cars.stream()
+                .filter(car -> car.getModel().toLowerCase().contains(search))
+                .toList();
+    }
 
-        for (var i = 0; i < cars.size(); i++) {
-            System.out.println((i + 1) + ".Марка:" + cars.get(i).getModel()
-                    + ", мощность:" + cars.get(i).getPower()
-                    + ", год выпуска:" + cars.get(i).getManufacturedYear());
-        }
+    public static List<Car> filterCarsByPower(double minPower) {
+        return cars.stream()
+                .filter(car -> car.getPower() >= minPower)
+                .toList();
+    }
+
+    public static List<Car> filterCarsByYear(int year) {
+        return cars.stream()
+                .filter(car -> car.getManufacturedYear() == year)
+                .toList();
     }
 }

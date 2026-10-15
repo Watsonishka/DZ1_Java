@@ -12,7 +12,6 @@ public class FileManager {
     public static List<Car> readCarsFromResource(String resourceName) {
         try (InputStream in = FileManager.class.getResourceAsStream(resourceName)) {
             if (in == null) {
-                System.out.println("Ресурс не найден: " + resourceName);
                 return List.of();
             }
             return mapper.readValue(in, new TypeReference<List<Car>>() {});

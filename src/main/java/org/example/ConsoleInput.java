@@ -1,4 +1,5 @@
 package org.example;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleInput {
@@ -83,7 +84,7 @@ public class ConsoleInput {
     }
 
     public static void AddCarFromJSON(Scanner scanner) {
-        System.out.print("Введите имя файла (например, car.json): ");
+        System.out.print("Введите имя файла (например: car.json): ");
         var fileName = scanner.nextLine().trim();
         var cars = CarRepository.getCarsFromFile("/" + fileName);
 
@@ -93,7 +94,7 @@ public class ConsoleInput {
         }
 
         System.out.println("Полученный результат:");
-        CarRepository.printCars(cars);
+        printCars(cars);
 
         while (true) {
             var confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
@@ -108,6 +109,19 @@ public class ConsoleInput {
             CarRepository.addCars(cars);
             System.out.println("Добавление объектов выполнено успешно!");
             break;
+        }
+    }
+
+    public static void printCars(List<Car> cars) {
+        if (cars == null || cars.isEmpty()) {
+            System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
+            return;
+        }
+
+        for (var i = 0; i < cars.size(); i++) {
+            System.out.println((i + 1) + ".Марка:" + cars.get(i).getModel()
+                    + ", мощность:" + cars.get(i).getPower()
+                    + ", год выпуска:" + cars.get(i).getManufacturedYear());
         }
     }
 
