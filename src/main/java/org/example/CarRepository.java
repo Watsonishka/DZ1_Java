@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CarRepository {
+
     private static final List<Car> cars = new ArrayList<>();
-    private String filePath = FileManager.class.getResource("/car.json").getPath();
 
     public static List<Car> GetAll() {
         return cars;
@@ -19,7 +19,7 @@ public class CarRepository {
     public static void addCars(List<Car> newCars) {cars.addAll(newCars);}
 
     public static List<Car> getCarsFromFile(String resourceName) {
-        return FileManager.readCarsFromResource(resourceName);
+        return FileManager.getFromFile(resourceName, Car.class);
     }
 
     public static List<Car> filterCarsByModel(String filter) {
@@ -42,9 +42,8 @@ public class CarRepository {
     }
 
     public static List<Car> sortByModel() {
-        return cars.stream()
-                .sorted(Comparator.comparing(Car::getModel))
-                .toList();
+        cars.sort(Comparator.comparing(Car::getModel));
+        return cars;
     }
 
     public static String getCarDescriptions(List<Car> carsList) {

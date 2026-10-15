@@ -1,4 +1,7 @@
 package org.example;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
@@ -45,8 +48,8 @@ public class ConsoleInput {
                     System.out.println("Ошибка: введено не число! Попробуйте снова!");
                     continue;
                 }
-                if (manufacturedYear < 1000 || manufacturedYear > 9999) {
-                    System.out.println("Ошибка: год должен быть четырёхзначным (1000–9999). Попробуйте снова!");
+                if (manufacturedYear < 1900 || manufacturedYear > 9999) {
+                    System.out.println("Ошибка: год должен быть четырёхзначным и начинаться с цифры 19 (1900–9999). Попробуйте снова!");
                     continue;
                 }
                 break;
@@ -73,7 +76,6 @@ public class ConsoleInput {
                     break;
                 }
             }
-
             cars.add(car);
             System.out.println("Машина добавлена.");
 
@@ -89,12 +91,30 @@ public class ConsoleInput {
     }
 
     public static void AddCarFromJSON(Scanner scanner) {
-        System.out.print("Введите имя файла (например: car.json): ");
-        var fileName = scanner.nextLine().trim();
-        var cars = CarRepository.getCarsFromFile("/" + fileName);
+        System.out.println("""
+            Введите путь к файлу (абсолютный или имя файла в папке проекта):
+            Например: C:\\Users\\Username\\Desktop\\test.json
+            Или: car.json
+            """);
 
+        var inputPath = scanner.nextLine().trim();
+        if (inputPath.isEmpty()) {
+            System.out.println("Путь не может быть пустым.");
+            return;
+        }
+
+        var path = Paths.get(inputPath);
+        if (!path.isAbsolute() && !Files.exists(path)) {
+            path = Paths.get(System.getProperty("user.dir"), inputPath);
+        }
+        if (!Files.exists(path)) {
+            System.out.println("Файл не найден по указанному пути: " + path.toAbsolutePath());
+            return;
+        }
+
+        var cars = FileManager.getFromFile(path.toAbsolutePath().toString(), Car.class);
         if (cars == null || cars.isEmpty()) {
-            System.out.println("Файл пуст или не найден.");
+            System.out.println("Файл пуст или содержит некорректные данные.");
             return;
         }
 

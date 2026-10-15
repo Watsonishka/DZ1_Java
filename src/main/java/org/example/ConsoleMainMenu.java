@@ -1,5 +1,4 @@
 package org.example;
-
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,7 +38,7 @@ public class ConsoleMainMenu {
                 return;
             }
             else {
-                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 4!");
+                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 5!");
             }
         }
     }
