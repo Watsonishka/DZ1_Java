@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class ConsoleInput {
 
     public static void AddCar(Scanner scanner) {
-        var cars = CarRepository.GetAll();
 
         while (true) {
             String model;
@@ -31,7 +30,7 @@ public class ConsoleInput {
                     System.out.println("Ошибка: введено не число! Попробуйте снова!");
                     continue;
                 }
-                if (power <= 0) {
+                if (!Double.isFinite(power) || power <= 0) {
                     System.out.println("Ошибка: Мощность не может быть отрицательной!. Попробуйте снова!");
                     continue;
                 }
@@ -49,7 +48,7 @@ public class ConsoleInput {
                     continue;
                 }
                 if (manufacturedYear < 1900 || manufacturedYear > 9999) {
-                    System.out.println("Ошибка: год должен быть четырёхзначным и начинаться с цифры 19 (1900–9999). Попробуйте снова!");
+                    System.out.println("Ошибка: год должен быть четырёхзначным и быть в диапазоне 1900–9999. Попробуйте снова!");
                     continue;
                 }
                 break;
@@ -76,7 +75,7 @@ public class ConsoleInput {
                     break;
                 }
             }
-            cars.add(car);
+            CarRepository.addCar(car);
             System.out.println("Машина добавлена.");
 
             var addMore = getConfirmation(scanner, "Хотите добавить ещё? Да/Нет");
@@ -119,16 +118,12 @@ public class ConsoleInput {
         }
 
         System.out.println("Полученный результат:");
-        var carToConfirm = CarRepository.getCarDescriptions(cars);
+        var carToConfirm = CarFormatter.getCarDescriptions(cars);
         System.out.println(carToConfirm);
 
         while (true) {
             var confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
 
-            if (confirmed == null) {
-                System.out.println("Ошибка: введите 'Да' или 'Нет'.");
-                continue;
-            }
             if (!confirmed) {
                 System.out.println("Добавление отменено.");
                 return;

@@ -32,7 +32,7 @@ public class ConsoleMainMenu {
                 handleSortMenu(scanner);
             }
             else if(answer == 5){
-                var cars = CarRepository.GetAll();
+                var cars = CarRepository.getAll();
                 printCarDescriptions(cars);
             }
             else if (answer == 0){
@@ -54,7 +54,7 @@ public class ConsoleMainMenu {
                 answer = Integer.parseInt(scanner.nextLine());
             }
             catch (NumberFormatException e) {
-                System.out.println("Ошибка: введено не число! Введите целое число от 0 до 4!");
+                System.out.println("Ошибка: введено не число! Введите целое число от 0 до 1!");
                 continue;
             }
 
@@ -66,7 +66,7 @@ public class ConsoleMainMenu {
                     System.out.println("По данному запросу ничего не найдено");
                 }
                 else {
-                    System.out.println(CarRepository.getCarDescriptions(filteredCars));
+                    System.out.println(CarFormatter.getCarDescriptions(filteredCars));
                 }
             }
             else if (answer == 0) {
@@ -92,14 +92,13 @@ public class ConsoleMainMenu {
             }
 
             if (answer == 1) {
-                var cars = CarRepository.sortByModel();
-                printCarDescriptions(cars);
+                printCarDescriptions(CarRepository.sortByModel());
             }
             else if (answer == 0) {
                 return;
             }
             else {
-                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 3!");
+                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 1!");
             }
         }
     }
@@ -109,7 +108,7 @@ public class ConsoleMainMenu {
             System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
         }
         else {
-            System.out.println(CarRepository.getCarDescriptions(cars));
+            System.out.println(CarFormatter.getCarDescriptions(cars));
         }
     }
 
