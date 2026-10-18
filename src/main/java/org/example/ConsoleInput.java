@@ -14,7 +14,7 @@ public class ConsoleInput {
                 System.out.println("Введите марку машины. Вводите буквы, цифры и знаки.");
                 model = scanner.nextLine().trim();
 
-                if (!isValidModel(model)) {
+                if (!CarValidator.isValidModel(model)) {
                     System.out.println("Ошибка: марка не может быть пустой. Попробуйте снова!");
                     continue;
                 }
@@ -32,7 +32,7 @@ public class ConsoleInput {
                     continue;
                 }
 
-                if (!isValidPower(power)) {
+                if (!CarValidator.isValidPower(power)) {
                     System.out.println("Ошибка: Мощность должна быть больше нуля! Попробуйте снова!");
                     continue;
                 }
@@ -50,7 +50,7 @@ public class ConsoleInput {
                     continue;
                 }
 
-                if (!isValidYear(manufacturedYear)) {
+                if (!CarValidator.isValidYear(manufacturedYear)) {
                     System.out.println("Ошибка: год должен быть в диапазоне 1900–9999. Попробуйте снова!");
                     continue;
                 }
@@ -58,7 +58,7 @@ public class ConsoleInput {
             }
 
             Car car = new Car(model, power, manufacturedYear);
-            if (!isValidCar(car)) {
+            if (!CarValidator.isValidCar(car)) {
                 System.out.println("Ошибка: созданный объект не прошёл общую валидацию. Попробуйте снова.");
                 continue;
             }
@@ -121,7 +121,7 @@ public class ConsoleInput {
         MyArrayList<Car> validCars = new MyArrayList<>();
         for (int i = 0; i < cars.size(); i++) {
             Car car = cars.get(i);
-            if (isValidCar(car)) {
+            if (CarValidator.isValidCar(car)) {
                 validCars.add(car);
             } else {
                 System.out.println("Предупреждение: пропущен некорректный объект -> " + CarFormatter.getCarDescriptions(car));
@@ -174,25 +174,5 @@ public class ConsoleInput {
             }
             System.out.println("Ошибка: введите 'Да' или 'Нет'.");
         }
-    }
-
-    private static boolean isValidCar(Car car) {
-        if (car == null) return false;
-
-        return isValidModel(car.getModel())
-                && isValidPower(car.getPower())
-                && isValidYear(car.getManufacturedYear());
-    }
-
-    private static boolean isValidModel(String model) {
-        return model != null && !model.trim().isEmpty();
-    }
-
-    private static boolean isValidPower(double power) {
-        return Double.isFinite(power) && power > 0;
-    }
-
-    private static boolean isValidYear(int year) {
-        return year >= 1900 && year <= 9999;
     }
 }
