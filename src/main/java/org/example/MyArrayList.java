@@ -41,6 +41,13 @@ public class MyArrayList<T>  {
                 .mapToObj(i -> (T) array[i]);
     }
 
+    public void set(int index, T item) {
+        if (index < 0 || index >= pointer) {
+            throw new IndexOutOfBoundsException("Индекс: " + index + ", размер: " + pointer);
+        }
+        array[index] = item;
+    }
+
     private void resize(int newLength) {
         var newArray = new Object[newLength];
         System.arraycopy(array, 0, newArray, 0, pointer);
