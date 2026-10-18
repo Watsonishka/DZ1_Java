@@ -1,35 +1,46 @@
 package org.example;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 
 public class CarRepository {
 
-    private static final List<Car> cars = new ArrayList<>();
+    private static final MyArrayList<Car> cars = new MyArrayList<>();
 
-    public static List<Car> getAll() {return cars;}
+    public static MyArrayList<Car> getAll() {return cars;}
 
     public static void addCar(Car car){
         cars.add(car);
     }
 
-    public static void addCars(List<Car> newCars) {cars.addAll(newCars);}
+    public static void addCars(MyArrayList<Car> newCars) {
+        for (int i = 0; i < newCars.size(); i++) {
+            cars.add(newCars.get(i));
+        }
+    }
 
-    public static List<Car> getCarsFromFile(String resourceName) {
+    public static MyArrayList<Car> getCarsFromFile(String resourceName) {
         return FileManager.getFromFile(resourceName, Car.class);
     }
 
-    public static List<Car> filterCarsByModel(String filter) {
+    public static MyArrayList<Car> filterCarsByModel(String filter) {
         String search = filter.trim().toLowerCase();
-        return cars.stream()
-                .filter(car -> car.getModel().toLowerCase().contains(search))
-                .toList();
+        MyArrayList<Car> filtered = new MyArrayList<>();
+
+        for (int i = 0; i < cars.size(); i++) {
+            Car car = cars.get(i);
+            if (car.getModel().toLowerCase().contains(search)) {
+                filtered.add(car);
+            }
+        }
+        return filtered;
     }
 
-    public static List<Car> sortByModel() {
-        return cars.stream()
+    public static MyArrayList<Car> sortByModel() {
+        MyArrayList<Car> sorted = new MyArrayList<>();
+
+        cars.stream()
                 .sorted(Comparator.comparing(Car::getModel))
-                .toList();
-    }
+                .forEach(sorted::add);
 
+        return sorted;
+    }
 }

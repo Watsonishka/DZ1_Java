@@ -1,13 +1,13 @@
 package org.example;
 
-public class MyArrayList<T> {
+public class MyArrayList<T>  {
     private final int INIT_SIZE = 16;
     private final int CUT_RATE = 4;
     private Object[] array = new Object[INIT_SIZE];
     private int pointer = 0;
 
     public void add(T item) {
-        if(pointer == array.length - 1) {
+        if (pointer == array.length) {
             resize(array.length * 2);
         }
         array[pointer++] = item;
@@ -32,9 +32,19 @@ public class MyArrayList<T> {
         return pointer;
     }
 
+    public boolean isEmpty() {
+        return pointer == 0;
+    }
+
+    public java.util.stream.Stream<T> stream() {
+        return java.util.stream.IntStream.range(0, pointer)
+                .mapToObj(i -> (T) array[i]);
+    }
+
     private void resize(int newLength) {
         var newArray = new Object[newLength];
         System.arraycopy(array, 0, newArray, 0, pointer);
         array = newArray;
     }
+
 }

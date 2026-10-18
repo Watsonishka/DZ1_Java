@@ -1,5 +1,4 @@
 package org.example;
-import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleMainMenu {
@@ -103,7 +102,7 @@ public class ConsoleMainMenu {
         }
     }
 
-    public static void printCarDescriptions(List<Car> cars){
+    public static void printCarDescriptions(MyArrayList<Car> cars){
         if (cars == null || cars.isEmpty()) {
             System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
         }

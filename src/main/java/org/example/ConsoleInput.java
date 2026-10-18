@@ -2,7 +2,6 @@ package org.example;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleInput {
@@ -62,10 +61,6 @@ public class ConsoleInput {
                             + " мощность двигателя: " + car.getPower()
                             + " год выпуска: " + car.getManufacturedYear() + "? Да/Нет");
 
-            if (confirmed == null) {
-                System.out.println("Ошибка: введите 'Да' или 'Нет'.");
-                continue;
-            }
             if (!confirmed) {
                 System.out.println("Добавление отменено.");
 
@@ -113,7 +108,7 @@ public class ConsoleInput {
             return;
         }
 
-        List<Car> cars = FileManager.getFromFile(path.toAbsolutePath().toString(), Car.class);
+        MyArrayList<Car> cars = FileManager.getFromFile(path.toAbsolutePath().toString(), Car.class);
         if (cars == null || cars.isEmpty()) {
             System.out.println("Файл пуст или содержит некорректные данные.");
             return;

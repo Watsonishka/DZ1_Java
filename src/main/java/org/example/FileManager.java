@@ -8,25 +8,33 @@ import java.util.List;
 
 public class FileManager {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static <T> List<T> getFromFile(String filePath, Class<T> type) {
+    public static <T> MyArrayList<T> getFromFile(String filePath, Class<T> type) {
         File file = new File(filePath);
 
         if (!file.exists()) {
             System.out.println("Файл не найден на диске: " + filePath);
-            return List.of();
+            return new MyArrayList<>();
         }
-        try (FileInputStream inputStream = new java.io.FileInputStream(file)) {
-            return mapper.readValue(
+
+        try (FileInputStream inputStream = new FileInputStream(file)) {
+            List<T> standardList = MAPPER.readValue(
                     inputStream,
-                    mapper.getTypeFactory()
+                    MAPPER.getTypeFactory()
                             .constructCollectionType(List.class, type)
             );
+
+            MyArrayList<T> myArrayList = new MyArrayList<>();
+            for (T item : standardList) {
+                myArrayList.add(item);
+            }
+            return myArrayList;
+
         }
         catch (IOException e) {
             System.out.println("Ошибка при чтении файла: " + e.getMessage());
-            return List.of();
+            return new MyArrayList<>();
         }
     }
 }
