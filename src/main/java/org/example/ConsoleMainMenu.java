@@ -1,6 +1,7 @@
 package org.example;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class ConsoleMainMenu {
 
@@ -39,22 +40,50 @@ public class ConsoleMainMenu {
 
     private static void handleFilterMenu(Scanner scanner) {
         while (true) {
-            showFilterMenu();
-            int answer = ConsoleInput.getInt(scanner, 0, 1);
+            System.out.println("По какому критерию осуществить поиск (фильтрацию) объектов?");
+            showComparatorChoiceMenu();
+            int answer = ConsoleInput.getInt(scanner, 0, 3);
+
+            if (answer == 0) {
+                return;
+            }
+
+            Predicate<Car> predicate = null;
 
             if (answer == 1) {
-                System.out.println("Введите название модели");
-                var filteredCars = CarRepository.filterCarsByModel(scanner.nextLine());
+                System.out.println("Введите название модели (или часть названия):");
+                String query = scanner.nextLine().trim().toLowerCase();
+                predicate = car -> car.getModel().toLowerCase().contains(query);
+            }
+            else if (answer == 2) {
+                System.out.println("Введите минимальную мощность (число):");
+                try {
+                    double minPower = Double.parseDouble(scanner.nextLine().trim().replace(',', '.'));
+                    predicate = car -> car.getPower() >= minPower;
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка: введено не число! Попробуйте снова.");
+                    continue;
+                }
+            }
+            else if (answer == 3) {
+                System.out.println("Введите год выпуска (целое число):");
+                try {
+                    int year = Integer.parseInt(scanner.nextLine().trim());
+                    predicate = car -> car.getManufacturedYear() == year;
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка: введено не целое число! Попробуйте снова.");
+                    continue;
+                }
+            }
 
+            if (predicate != null) {
+                var filteredCars = CarRepository.filter(predicate);
                 if (filteredCars == null || filteredCars.isEmpty()) {
                     System.out.println("По данному запросу ничего не найдено");
-                } else {
+                }
+                else {
                     System.out.println(CarFormatter.getCarDescriptions(filteredCars));
                 }
-            } else if (answer == 0) {
-                return;
-            } else {
-                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 1!");
             }
         }
     }
@@ -95,7 +124,7 @@ public class ConsoleMainMenu {
 
     private static Comparator<Car> selectComparatorWithDirection(Scanner scanner) {
         while (true) {
-            showSortComparatorMenu();
+            showComparatorChoiceMenu();
             int answer = ConsoleInput.getInt(scanner, 0, 3);
 
             if (answer == 0) {
@@ -141,17 +170,6 @@ public class ConsoleMainMenu {
                 """);
     }
 
-    private static void showFilterMenu() {
-        System.out.println("""
-                
-                ===== ФИЛЬТРАЦИЯ =====
-                1. Фильтровать по модели                
-                0. Назад
-                
-                Введите целое число:
-                """);
-    }
-
     private static void showSortMenu() {
         System.out.println("""
                 
@@ -168,21 +186,21 @@ public class ConsoleMainMenu {
         System.out.println("""
                 
                 ===== НАПРАВЛЕНИЕ СОРТИРОВКИ =====
-                1. Сортировка по возрастанию (ASC)
-                2. Сортировка по убыванию (DESC)
+                1. Сортировка по возрастанию
+                2. Сортировка по убыванию
                 0. Назад
                 
                 Введите целое число:
                 """);
     }
 
-    private static void showSortComparatorMenu() {
+    private static void showComparatorChoiceMenu() {
         System.out.println("""
                 
-                ===== КРИТЕРИЙ СОРТИРОВКИ =====
-                1. Сортировка по названию модели
-                2. Сортировка по мощности
-                3. Сортировка по году выпуска
+                ===== ВЫБОР КРИТЕРИЯ =====
+                1. По названию модели
+                2. По мощности
+                3. По году выпуска
                 0. Назад
                 
                 Введите целое число:

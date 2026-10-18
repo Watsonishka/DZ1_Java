@@ -1,5 +1,6 @@
 package org.example;
 import java.util.Comparator;
+import java.util.function.Predicate;
 
 public class CarRepository {
 
@@ -21,14 +22,15 @@ public class CarRepository {
         return FileManager.getFromFile(resourceName, Car.class);
     }
 
-    public static MyArrayList<Car> filterCarsByModel(String filter) {
-        MyArrayList<Car> sorted = new MyArrayList<>();
-
-        cars.stream()
-                .sorted(Comparator.comparing(Car::getModel))
-                .forEach(sorted::add);
-
-        return sorted;
+    public static MyArrayList<Car> filter(Predicate<Car> predicate) {
+        MyArrayList<Car> result = new MyArrayList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            Car car = cars.get(i);
+            if (predicate.test(car)) {
+                result.add(car);
+            }
+        }
+        return result;
     }
 
     public static MyArrayList<Car> sort(SortAlgorithm<Car> algorithm, Comparator<Car> comparator) {

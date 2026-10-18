@@ -14,7 +14,7 @@ public class ConsoleInput {
                 System.out.println("Введите марку машины. Вводите буквы, цифры и знаки.");
                 model = scanner.nextLine().trim();
 
-                if (model.isEmpty()) {
+                if (!isValidModel(model)) {
                     System.out.println("Ошибка: марка не может быть пустой. Попробуйте снова!");
                     continue;
                 }
@@ -31,8 +31,9 @@ public class ConsoleInput {
                     System.out.println("Ошибка: введено не число! Попробуйте снова!");
                     continue;
                 }
-                if (!Double.isFinite(power) || power <= 0) {
-                    System.out.println("Ошибка: Мощность не может быть отрицательной!. Попробуйте снова!");
+
+                if (!isValidPower(power)) {
+                    System.out.println("Ошибка: Мощность должна быть больше нуля! Попробуйте снова!");
                     continue;
                 }
                 break;
@@ -42,20 +43,26 @@ public class ConsoleInput {
             while (true) {
                 System.out.println("Введите год выпуска машины (четыре цифры, например 1999):");
                 try {
-                    manufacturedYear = Integer.parseInt(scanner.nextLine());
+                    manufacturedYear = Integer.parseInt(scanner.nextLine().trim());
                 }
                 catch (NumberFormatException e) {
                     System.out.println("Ошибка: введено не число! Попробуйте снова!");
                     continue;
                 }
-                if (manufacturedYear < 1900 || manufacturedYear > 9999) {
-                    System.out.println("Ошибка: год должен быть четырёхзначным и быть в диапазоне 1900–9999. Попробуйте снова!");
+
+                if (!isValidYear(manufacturedYear)) {
+                    System.out.println("Ошибка: год должен быть в диапазоне 1900–9999. Попробуйте снова!");
                     continue;
                 }
                 break;
             }
 
             Car car = new Car(model, power, manufacturedYear);
+            if (!isValidCar(car)) {
+                System.out.println("Ошибка: созданный объект не прошёл общую валидацию. Попробуйте снова.");
+                continue;
+            }
+
             Boolean confirmed = getConfirmation(scanner,
                     "Подтверждаете добавление машины: модель " + car.getModel()
                             + " мощность двигателя: " + car.getPower()
@@ -72,15 +79,12 @@ public class ConsoleInput {
                     break;
                 }
             }
+
             CarRepository.addCar(car);
             System.out.println("Машина добавлена.");
 
             Boolean addMore = getConfirmation(scanner, "Хотите добавить ещё? Да/Нет");
-            if (addMore == null) {
-                System.out.println("Ошибка: введите 'Да' или 'Нет'. Считаем, что 'Нет'.");
-                break;
-            }
-            if (!addMore) {
+            if (addMore == null || !addMore) {
                 break;
             }
         }
@@ -88,10 +92,10 @@ public class ConsoleInput {
 
     public static void AddCarFromJSON(Scanner scanner) {
         System.out.println("""
-            Введите путь к файлу (абсолютный или имя файла в папке проекта):
-            Например: C:\\Users\\Username\\Desktop\\test.json
-            Или: car.json
-            """);
+        Введите путь к файлу (абсолютный или имя файла в папке проекта):
+        Например: C:\\Users\\Username\\Desktop\\test.json
+        Или: car.json
+        """);
 
         String inputPath = scanner.nextLine().trim();
         if (inputPath.isEmpty()) {
@@ -114,21 +118,32 @@ public class ConsoleInput {
             return;
         }
 
-        System.out.println("Полученный результат:");
-        String carToConfirm = CarFormatter.getCarDescriptions(cars);
-        System.out.println(carToConfirm);
-
-        while (true) {
-            Boolean confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
-
-            if (!confirmed) {
-                System.out.println("Добавление отменено.");
-                return;
+        MyArrayList<Car> validCars = new MyArrayList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            Car car = cars.get(i);
+            if (isValidCar(car)) {
+                validCars.add(car);
+            } else {
+                System.out.println("Предупреждение: пропущен некорректный объект -> " + CarFormatter.getCarDescriptions(car));
             }
-            CarRepository.addCars(cars);
-            System.out.println("Добавление объектов выполнено успешно!");
-            break;
         }
+
+        if (validCars.isEmpty()) {
+            System.out.println("В файле нет ни одного валидного объекта для добавления.");
+            return;
+        }
+
+        System.out.println("Полученный результат (прошедший валидацию):");
+        System.out.println(CarFormatter.getCarDescriptions(validCars));
+
+        boolean confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
+        if (!confirmed) {
+            System.out.println("Добавление отменено.");
+            return;
+        }
+
+        CarRepository.addCars(validCars);
+        System.out.println("Добавление объектов выполнено успешно!");
     }
 
     public static int getInt(Scanner scanner, int min, int max) {
@@ -159,5 +174,25 @@ public class ConsoleInput {
             }
             System.out.println("Ошибка: введите 'Да' или 'Нет'.");
         }
+    }
+
+    private static boolean isValidCar(Car car) {
+        if (car == null) return false;
+
+        return isValidModel(car.getModel())
+                && isValidPower(car.getPower())
+                && isValidYear(car.getManufacturedYear());
+    }
+
+    private static boolean isValidModel(String model) {
+        return model != null && !model.trim().isEmpty();
+    }
+
+    private static boolean isValidPower(double power) {
+        return Double.isFinite(power) && power > 0;
+    }
+
+    private static boolean isValidYear(int year) {
+        return year >= 1900 && year <= 9999;
     }
 }

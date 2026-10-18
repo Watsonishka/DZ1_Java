@@ -1,10 +1,9 @@
 package org.example;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.List;
-
 
 public class FileManager {
 
@@ -31,9 +30,8 @@ public class FileManager {
             }
             return myArrayList;
 
-        }
-        catch (IOException e) {
-            System.out.println("Ошибка при чтении файла: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Ошибка при чтении или разборе файла (проверьте корректность данных в файле): " + e.getMessage());
             return new MyArrayList<>();
         }
     }
