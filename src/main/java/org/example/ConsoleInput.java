@@ -131,6 +131,21 @@ public class ConsoleInput {
         }
     }
 
+    public static int getInt(Scanner scanner, int min, int max) {
+        while (true) {
+            try {
+                int value = Integer.parseInt(scanner.nextLine().trim());
+                if (value < min || value > max) {
+                    System.out.printf("Введите целое число от %d до %d!%n", min, max);
+                    continue;
+                }
+                return value;
+            } catch (NumberFormatException e) {
+                System.out.printf("Ошибка: введено не число! Введите целое число от %d до %d!%n", min, max);
+            }
+        }
+    }
+
     static Boolean getConfirmation(Scanner scanner, String question) {
         while (true) {
             System.out.println(question);

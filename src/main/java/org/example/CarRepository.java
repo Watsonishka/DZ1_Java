@@ -22,19 +22,6 @@ public class CarRepository {
     }
 
     public static MyArrayList<Car> filterCarsByModel(String filter) {
-        String search = filter.trim().toLowerCase();
-        MyArrayList<Car> filtered = new MyArrayList<>();
-
-        for (int i = 0; i < cars.size(); i++) {
-            Car car = cars.get(i);
-            if (car.getModel().toLowerCase().contains(search)) {
-                filtered.add(car);
-            }
-        }
-        return filtered;
-    }
-
-    public static MyArrayList<Car> sortByModel() {
         MyArrayList<Car> sorted = new MyArrayList<>();
 
         cars.stream()
@@ -42,5 +29,13 @@ public class CarRepository {
                 .forEach(sorted::add);
 
         return sorted;
+    }
+
+    public static MyArrayList<Car> sort(SortAlgorithm<Car> algorithm, Comparator<Car> comparator) {
+        MyArrayList<Car> copyCars = new MyArrayList<>();
+        for (int i = 0; i < cars.size(); i++) {
+            copyCars.add(cars.get(i));
+        }
+        return algorithm.sort(copyCars, comparator);
     }
 }
