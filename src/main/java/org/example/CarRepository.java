@@ -20,7 +20,7 @@ public class CarRepository {
     }
 
     public static List<Car> filterCarsByModel(String filter) {
-        var search = filter.trim().toLowerCase();
+        String search = filter.trim().toLowerCase();
         return cars.stream()
                 .filter(car -> car.getModel().toLowerCase().contains(search))
                 .toList();

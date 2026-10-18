@@ -1,6 +1,8 @@
 package org.example;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleInput {
@@ -54,8 +56,8 @@ public class ConsoleInput {
                 break;
             }
 
-            var car = new Car(model, power, manufacturedYear);
-            var confirmed = getConfirmation(scanner,
+            Car car = new Car(model, power, manufacturedYear);
+            Boolean confirmed = getConfirmation(scanner,
                     "Подтверждаете добавление машины: модель " + car.getModel()
                             + " мощность двигателя: " + car.getPower()
                             + " год выпуска: " + car.getManufacturedYear() + "? Да/Нет");
@@ -78,7 +80,7 @@ public class ConsoleInput {
             CarRepository.addCar(car);
             System.out.println("Машина добавлена.");
 
-            var addMore = getConfirmation(scanner, "Хотите добавить ещё? Да/Нет");
+            Boolean addMore = getConfirmation(scanner, "Хотите добавить ещё? Да/Нет");
             if (addMore == null) {
                 System.out.println("Ошибка: введите 'Да' или 'Нет'. Считаем, что 'Нет'.");
                 break;
@@ -96,13 +98,13 @@ public class ConsoleInput {
             Или: car.json
             """);
 
-        var inputPath = scanner.nextLine().trim();
+        String inputPath = scanner.nextLine().trim();
         if (inputPath.isEmpty()) {
             System.out.println("Путь не может быть пустым.");
             return;
         }
 
-        var path = Paths.get(inputPath);
+        Path path = Paths.get(inputPath);
         if (!path.isAbsolute() && !Files.exists(path)) {
             path = Paths.get(System.getProperty("user.dir"), inputPath);
         }
@@ -111,18 +113,18 @@ public class ConsoleInput {
             return;
         }
 
-        var cars = FileManager.getFromFile(path.toAbsolutePath().toString(), Car.class);
+        List<Car> cars = FileManager.getFromFile(path.toAbsolutePath().toString(), Car.class);
         if (cars == null || cars.isEmpty()) {
             System.out.println("Файл пуст или содержит некорректные данные.");
             return;
         }
 
         System.out.println("Полученный результат:");
-        var carToConfirm = CarFormatter.getCarDescriptions(cars);
+        String carToConfirm = CarFormatter.getCarDescriptions(cars);
         System.out.println(carToConfirm);
 
         while (true) {
-            var confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
+            Boolean confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
 
             if (!confirmed) {
                 System.out.println("Добавление отменено.");

@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class ConsoleMainMenu {
 
     public static void getMenuChoice(){
-        var scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         while (true) {
             show();
