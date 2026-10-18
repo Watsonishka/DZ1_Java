@@ -33,11 +33,7 @@ public class CarRepository {
         return result;
     }
 
-    public static MyArrayList<Car> sort(SortAlgorithm<Car> algorithm, Comparator<Car> comparator) {
-        MyArrayList<Car> copyCars = new MyArrayList<>();
-        for (int i = 0; i < cars.size(); i++) {
-            copyCars.add(cars.get(i));
-        }
-        return algorithm.sort(copyCars, comparator);
+    public static MyArrayList<Car> sort(SortAlgorithm<Car> algorithm,Comparator<Car> comparator) {
+        return algorithm.sort(cars, comparator);
     }
 }
