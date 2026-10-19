@@ -1,5 +1,7 @@
-package org.example;
+package org.example.helpers;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.collection.MyArrayList;
+
 import java.util.List;
 import java.io.InputStream;
 

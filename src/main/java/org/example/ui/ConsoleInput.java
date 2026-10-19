@@ -1,7 +1,10 @@
-package org.example;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+package org.example.ui;
+import org.example.model.Car;
+import org.example.model.CarFormatter;
+import org.example.model.CarRepository;
+import org.example.model.CarValidator;
+import org.example.collection.MyArrayList;
+
 import java.util.Scanner;
 
 public class ConsoleInput {

@@ -1,4 +1,12 @@
-package org.example;
+package org.example.ui;
+import org.example.model.Car;
+import org.example.model.CarFormatter;
+import org.example.model.CarRepository;
+import org.example.collection.MyArrayList;
+import org.example.sort.BubbleSort;
+import org.example.sort.InsertionSort;
+import org.example.sort.SortAlgorithm;
+
 import java.util.Comparator;
 import java.util.Scanner;
 import java.util.function.Predicate;

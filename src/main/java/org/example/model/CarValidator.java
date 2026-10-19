@@ -1,4 +1,4 @@
-package org.example;
+package org.example.model;
 
 public class CarValidator {
     public static boolean isValidModel(String model) {

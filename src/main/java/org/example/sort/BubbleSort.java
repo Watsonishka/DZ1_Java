@@ -1,4 +1,6 @@
-package org.example;
+package org.example.sort;
+import org.example.collection.MyArrayList;
+
 import java.util.Comparator;
 
 public class BubbleSort<T> implements SortAlgorithm<T> {

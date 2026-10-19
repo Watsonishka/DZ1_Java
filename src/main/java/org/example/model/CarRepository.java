@@ -1,4 +1,8 @@
-package org.example;
+package org.example.model;
+import org.example.helpers.FileManager;
+import org.example.collection.MyArrayList;
+import org.example.sort.SortAlgorithm;
+
 import java.util.Comparator;
 import java.util.function.Predicate;
 

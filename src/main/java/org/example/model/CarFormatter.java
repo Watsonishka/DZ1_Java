@@ -1,4 +1,6 @@
-package org.example;
+package org.example.model;
+import org.example.collection.MyArrayList;
+
 import java.util.stream.Collectors;
 
 public class CarFormatter {
