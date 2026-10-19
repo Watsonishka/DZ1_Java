@@ -1,43 +1,65 @@
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
-!**/src/test/**/build/
-.kotlin
+# ==============================
+# Gradle
+# ==============================
+.gradle/
+**/build/
+.kotlin/
 
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
-*.iws
+# Gradle Wrapper — оставить в Git
+!gradle/wrapper/gradle-wrapper.jar
+
+# ==============================
+# Java
+# ==============================
+*.class
+hs_err_pid*
+replay_pid*
+
+# ==============================
+# IntelliJ IDEA
+# ==============================
+.idea/
 *.iml
 *.ipr
+*.iws
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 
-### Eclipse ###
-.apt_generated
+# ==============================
+# Eclipse
+# ==============================
+.apt_generated/
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
-.sts4-cache
+.sts4-cache/
 bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
 
-### NetBeans ###
+# ==============================
+# NetBeans
+# ==============================
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 
-### VS Code ###
+# ==============================
+# Visual Studio Code
+# ==============================
 .vscode/
 
-### Mac OS ###
+# ==============================
+# Operating systems
+# ==============================
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# ==============================
+# Logs and temporary files
+# ==============================
+*.log
+*.tmp
+*.bak
