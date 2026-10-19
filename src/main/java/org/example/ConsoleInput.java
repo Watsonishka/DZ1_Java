@@ -71,28 +71,16 @@ public class ConsoleInput {
     }
 
     public static void addCarFromJSON (Scanner scanner) {
-        System.out.println("""
-        Введите путь к файлу (абсолютный или имя файла в папке проекта):
-        Например: C:\\Users\\Username\\Desktop\\test.json
-        Или: car.json
-        """);
+        System.out.println("Введите имя файла в папке ресурсов (например: car.json):");
 
-        String inputPath = scanner.nextLine().trim();
-        if (inputPath.isEmpty()) {
-            System.out.println("Путь не может быть пустым.");
+        String fileName = scanner.nextLine().trim();
+        if (fileName.isEmpty()) {
+            System.out.println("Имя файла не может быть пустым.");
             return;
         }
 
-        Path path = Paths.get(inputPath);
-        if (!path.isAbsolute() && !Files.exists(path)) {
-            path = Paths.get(System.getProperty("user.dir"), inputPath);
-        }
-        if (!Files.exists(path)) {
-            System.out.println("Файл не найден по указанному пути: " + path.toAbsolutePath());
-            return;
-        }
+        MyArrayList<Car> cars = CarRepository.getCarsFromFile(fileName);
 
-        MyArrayList<Car> cars = CarRepository.getCarsFromFile(path.toAbsolutePath().toString());
         if (cars == null || cars.isEmpty()) {
             System.out.println("Файл пуст или содержит некорректные данные.");
             return;
@@ -104,7 +92,7 @@ public class ConsoleInput {
             if (CarValidator.isValidCar(car)) {
                 validCars.add(car);
             } else {
-                System.out.println("Предупреждение: пропущен некорректный объект");
+                System.out.println("Предупреждение: найден некорректный объект");
             }
         }
 

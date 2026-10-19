@@ -9,10 +9,5 @@ public class CarFormatter {
                         + car.getManufacturedYear() + " г.")
                 .collect(Collectors.joining("\n"));
     }
-
-    public static String getCarDescriptions(Car car) {
-        return car.getModel() + " — " + car.getPower() + " л.с., "
-                + car.getManufacturedYear() + " г.";
-    }
 }
 

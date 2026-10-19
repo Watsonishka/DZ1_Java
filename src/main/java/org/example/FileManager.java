@@ -1,31 +1,36 @@
 package org.example;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.List;
+import java.io.InputStream;
 
 public class FileManager {
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
-    public static <T> MyArrayList<T> getFromFile(String filePath, Class<T> type) {
-        File file = new File(filePath);
+    public static <T> MyArrayList<T> getFromFile(String resourceName, Class<T> type) {
 
-        if (!file.exists()) {
-            System.out.println("Файл не найден на диске: " + filePath);
+        InputStream inputStream = FileManager.class.getClassLoader().getResourceAsStream(resourceName);
+
+        if (inputStream == null) {
             return new MyArrayList<>();
         }
 
-        try (FileInputStream inputStream = new FileInputStream(file)) {
-            List<T> standardList = MAPPER.readValue(inputStream, MAPPER.getTypeFactory().constructCollectionType(List.class, type));
+        try (InputStream is = inputStream) {
+            List<T> standardList = MAPPER.readValue(
+                    is,
+                    MAPPER.getTypeFactory()
+                            .constructCollectionType(List.class, type)
+            );
 
             MyArrayList<T> myArrayList = new MyArrayList<>();
-            for (T item : standardList) {
-                myArrayList.add(item);
+
+            for (int i = 0; i < standardList.size(); i++) {
+                myArrayList.add(standardList.get(i));
             }
+
             return myArrayList;
         }
         catch (Exception e) {
-            System.out.println("Ошибка при чтении или разборе файла (проверьте корректность данных в файле): " + e.getMessage());
+            System.out.println("Ошибка при чтении или разборе файла: " + e.getMessage());
             return new MyArrayList<>();
         }
     }

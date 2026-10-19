@@ -53,6 +53,10 @@ public class MyArrayList<T>  {
     }
 
     private void resize(int newLength) {
+        if (newLength < pointer) {
+            throw new IllegalArgumentException("Новый размер меньше количества элементов");
+        }
+
         Object[] newArray = new Object[newLength];
         System.arraycopy(array, 0, newArray, 0, pointer);
         array = newArray;

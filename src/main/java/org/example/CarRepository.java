@@ -9,8 +9,8 @@ public class CarRepository {
     public static MyArrayList<Car> getAll() {
         MyArrayList<Car> copy = new MyArrayList<>();
 
-        for (Car car : cars.stream().toList()) {
-            copy.add(car);
+        for (int i = 0; i < cars.size(); i++) {
+            copy.add(cars.get(i));
         }
         return copy;
     }
@@ -22,6 +22,10 @@ public class CarRepository {
     }
 
     public static void addCars(MyArrayList<Car> newCars) {
+        if (newCars == null) {
+            return;
+        }
+
         for (int i = 0; i < newCars.size(); i++) {
             if (newCars.get(i) != null) {
                 cars.add(newCars.get(i));
@@ -34,10 +38,14 @@ public class CarRepository {
     }
 
     public static MyArrayList<Car> filter(Predicate<Car> predicate) {
-        MyArrayList<Car> result = new MyArrayList<>();
+        if (predicate == null) {
+            throw new IllegalArgumentException("Критерий фильтрации не задан");
+        }
 
+        MyArrayList<Car> result = new MyArrayList<>();
         for (int i = 0; i < cars.size(); i++) {
             Car car = cars.get(i);
+
             if (predicate.test(car)) {
                 result.add(car);
             }
