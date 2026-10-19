@@ -13,10 +13,10 @@ public class ConsoleMainMenu {
             int answer = ConsoleInput.getInt(scanner, 0, 5);
 
             if (answer == 1) {
-                ConsoleInput.AddCar(scanner);
+                ConsoleInput.addCar(scanner);
             }
             else if (answer == 2) {
-                ConsoleInput.AddCarFromJSON(scanner);
+                ConsoleInput.addCarFromJSON(scanner);
             }
             else if (answer == 3) {
                 handleFilterMenu(scanner);
@@ -31,9 +31,6 @@ public class ConsoleMainMenu {
             else if (answer == 0) {
                 System.out.println("Выход из программы...");
                 return;
-            }
-            else {
-                System.out.println("Введена неизвестная команда! Введите целое число от 0 до 5!");
             }
         }
     }
@@ -60,7 +57,8 @@ public class ConsoleMainMenu {
                 try {
                     double minPower = Double.parseDouble(scanner.nextLine().trim().replace(',', '.'));
                     predicate = car -> car.getPower() >= minPower;
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     System.out.println("Ошибка: введено не число! Попробуйте снова.");
                     continue;
                 }
@@ -70,7 +68,8 @@ public class ConsoleMainMenu {
                 try {
                     int year = Integer.parseInt(scanner.nextLine().trim());
                     predicate = car -> car.getManufacturedYear() == year;
-                } catch (NumberFormatException e) {
+                }
+                catch (NumberFormatException e) {
                     System.out.println("Ошибка: введено не целое число! Попробуйте снова.");
                     continue;
                 }

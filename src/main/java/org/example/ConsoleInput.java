@@ -6,8 +6,7 @@ import java.util.Scanner;
 
 public class ConsoleInput {
 
-    public static void AddCar(Scanner scanner) {
-
+    public static void addCar(Scanner scanner) {
         while (true) {
             String model;
             while (true) {
@@ -40,29 +39,10 @@ public class ConsoleInput {
             }
 
             int manufacturedYear;
-            while (true) {
-                System.out.println("Введите год выпуска машины (четыре цифры, например 1999):");
-                try {
-                    manufacturedYear = Integer.parseInt(scanner.nextLine().trim());
-                }
-                catch (NumberFormatException e) {
-                    System.out.println("Ошибка: введено не число! Попробуйте снова!");
-                    continue;
-                }
-
-                if (!CarValidator.isValidYear(manufacturedYear)) {
-                    System.out.println("Ошибка: год должен быть в диапазоне 1900–9999. Попробуйте снова!");
-                    continue;
-                }
-                break;
-            }
+            System.out.println("Введите год выпуска машины (четыре цифры, начиная с 19):");
+            manufacturedYear = getInt(scanner, 1900, 9999);
 
             Car car = new Car(model, power, manufacturedYear);
-            if (!CarValidator.isValidCar(car)) {
-                System.out.println("Ошибка: созданный объект не прошёл общую валидацию. Попробуйте снова.");
-                continue;
-            }
-
             Boolean confirmed = getConfirmation(scanner,
                     "Подтверждаете добавление машины: модель " + car.getModel()
                             + " мощность двигателя: " + car.getPower()
@@ -84,13 +64,13 @@ public class ConsoleInput {
             System.out.println("Машина добавлена.");
 
             Boolean addMore = getConfirmation(scanner, "Хотите добавить ещё? Да/Нет");
-            if (addMore == null || !addMore) {
+            if (!addMore) {
                 break;
             }
         }
     }
 
-    public static void AddCarFromJSON(Scanner scanner) {
+    public static void addCarFromJSON (Scanner scanner) {
         System.out.println("""
         Введите путь к файлу (абсолютный или имя файла в папке проекта):
         Например: C:\\Users\\Username\\Desktop\\test.json
@@ -112,7 +92,7 @@ public class ConsoleInput {
             return;
         }
 
-        MyArrayList<Car> cars = FileManager.getFromFile(path.toAbsolutePath().toString(), Car.class);
+        MyArrayList<Car> cars = CarRepository.getCarsFromFile(path.toAbsolutePath().toString());
         if (cars == null || cars.isEmpty()) {
             System.out.println("Файл пуст или содержит некорректные данные.");
             return;
@@ -124,12 +104,12 @@ public class ConsoleInput {
             if (CarValidator.isValidCar(car)) {
                 validCars.add(car);
             } else {
-                System.out.println("Предупреждение: пропущен некорректный объект -> " + CarFormatter.getCarDescriptions(car));
+                System.out.println("Предупреждение: пропущен некорректный объект");
             }
         }
 
         if (validCars.isEmpty()) {
-            System.out.println("В файле нет ни одного валидного объекта для добавления.");
+            System.out.println("В файле нет ни одного валидного объекта для добавления. Попробуйте изменить данные файла");
             return;
         }
 

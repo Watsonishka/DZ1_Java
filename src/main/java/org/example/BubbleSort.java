@@ -25,7 +25,6 @@ public class BubbleSort<T> implements SortAlgorithm<T> {
                     swapped = true;
                 }
             }
-
             if (!swapped) break;
         }
         return sortedList;

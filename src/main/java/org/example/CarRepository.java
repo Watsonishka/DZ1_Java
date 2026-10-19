@@ -6,15 +6,26 @@ public class CarRepository {
 
     private static final MyArrayList<Car> cars = new MyArrayList<>();
 
-    public static MyArrayList<Car> getAll() {return cars;}
+    public static MyArrayList<Car> getAll() {
+        MyArrayList<Car> copy = new MyArrayList<>();
+
+        for (Car car : cars.stream().toList()) {
+            copy.add(car);
+        }
+        return copy;
+    }
 
     public static void addCar(Car car){
-        cars.add(car);
+        if (car != null) {
+            cars.add(car);
+        }
     }
 
     public static void addCars(MyArrayList<Car> newCars) {
         for (int i = 0; i < newCars.size(); i++) {
-            cars.add(newCars.get(i));
+            if (newCars.get(i) != null) {
+                cars.add(newCars.get(i));
+            }
         }
     }
 
@@ -24,6 +35,7 @@ public class CarRepository {
 
     public static MyArrayList<Car> filter(Predicate<Car> predicate) {
         MyArrayList<Car> result = new MyArrayList<>();
+
         for (int i = 0; i < cars.size(); i++) {
             Car car = cars.get(i);
             if (predicate.test(car)) {
@@ -33,7 +45,7 @@ public class CarRepository {
         return result;
     }
 
-    public static MyArrayList<Car> sort(SortAlgorithm<Car> algorithm,Comparator<Car> comparator) {
+    public static MyArrayList<Car> sort(SortAlgorithm<Car> algorithm, Comparator<Car> comparator) {
         return algorithm.sort(cars, comparator);
     }
 }
