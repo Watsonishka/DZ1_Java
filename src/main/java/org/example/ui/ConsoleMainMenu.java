@@ -6,7 +6,6 @@ import org.example.collection.MyArrayList;
 import org.example.sort.BubbleSort;
 import org.example.sort.InsertionSort;
 import org.example.sort.SortAlgorithm;
-
 import java.util.Comparator;
 import java.util.Scanner;
 import java.util.function.Predicate;
@@ -14,6 +13,7 @@ import java.util.function.Predicate;
 public class ConsoleMainMenu {
 
     public static void getMenuChoice() {
+
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -44,6 +44,7 @@ public class ConsoleMainMenu {
     }
 
     private static void handleFilterMenu(Scanner scanner) {
+
         while (true) {
             System.out.println("По какому критерию осуществить поиск (фильтрацию) объектов?");
             showComparatorChoiceMenu();
@@ -96,6 +97,7 @@ public class ConsoleMainMenu {
     }
 
     private static void handleSortMenu(Scanner scanner) {
+
         while (true) {
             showSortMenu();
             int answer = ConsoleInput.getInt(scanner, 0, 2);
@@ -117,10 +119,12 @@ public class ConsoleMainMenu {
     }
 
     private static SortAlgorithm<Car> selectAlgorithm(int choice) {
+
         return (choice == 1) ? new BubbleSort<>() : new InsertionSort<>();
     }
 
     private static Comparator<Car> selectComparator(int choice) {
+
         return switch (choice) {
             case 1 -> Comparator.comparing(Car::getModel);
             case 2 -> Comparator.comparingDouble(Car::getPower);
@@ -130,6 +134,7 @@ public class ConsoleMainMenu {
     }
 
     private static Comparator<Car> selectComparatorWithDirection(Scanner scanner) {
+
         while (true) {
             showComparatorChoiceMenu();
             int answer = ConsoleInput.getInt(scanner, 0, 3);
@@ -155,6 +160,7 @@ public class ConsoleMainMenu {
     }
 
     public static void printCarDescriptions(MyArrayList<Car> cars) {
+
         if (cars == null || cars.isEmpty()) {
             System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
         } else {
@@ -163,6 +169,7 @@ public class ConsoleMainMenu {
     }
 
     private static void show() {
+
         System.out.println("""
                 
                 ===== МЕНЮ =====
@@ -178,6 +185,7 @@ public class ConsoleMainMenu {
     }
 
     private static void showSortMenu() {
+
         System.out.println("""
                 
                 ===== СОРТИРОВКА =====
@@ -190,6 +198,7 @@ public class ConsoleMainMenu {
     }
 
     private static void showSortDirectionMenu() {
+
         System.out.println("""
                 
                 ===== НАПРАВЛЕНИЕ СОРТИРОВКИ =====
@@ -202,6 +211,7 @@ public class ConsoleMainMenu {
     }
 
     private static void showComparatorChoiceMenu() {
+
         System.out.println("""
                 
                 ===== ВЫБОР КРИТЕРИЯ =====

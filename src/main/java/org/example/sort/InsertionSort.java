@@ -4,6 +4,7 @@ import org.example.collection.MyArrayList;
 import java.util.Comparator;
 
 public class InsertionSort <T> implements SortAlgorithm<T>{
+
     @Override
     public MyArrayList<T> sort(MyArrayList<T> list, Comparator<T> comparator) {
         MyArrayList<T> sortedList = new MyArrayList<>();

@@ -2,7 +2,6 @@ package org.example.model;
 import org.example.helpers.FileManager;
 import org.example.collection.MyArrayList;
 import org.example.sort.SortAlgorithm;
-
 import java.util.Comparator;
 import java.util.function.Predicate;
 
@@ -12,7 +11,6 @@ public class CarRepository {
 
     public static MyArrayList<Car> getAll() {
         MyArrayList<Car> copy = new MyArrayList<>();
-
         for (int i = 0; i < cars.size(); i++) {
             copy.add(cars.get(i));
         }
@@ -29,7 +27,6 @@ public class CarRepository {
         if (newCars == null) {
             return;
         }
-
         for (int i = 0; i < newCars.size(); i++) {
             if (newCars.get(i) != null) {
                 cars.add(newCars.get(i));
@@ -49,7 +46,6 @@ public class CarRepository {
         MyArrayList<Car> result = new MyArrayList<>();
         for (int i = 0; i < cars.size(); i++) {
             Car car = cars.get(i);
-
             if (predicate.test(car)) {
                 result.add(car);
             }

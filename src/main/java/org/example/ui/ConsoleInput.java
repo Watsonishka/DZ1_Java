@@ -4,7 +4,6 @@ import org.example.model.CarFormatter;
 import org.example.model.CarRepository;
 import org.example.model.CarValidator;
 import org.example.collection.MyArrayList;
-
 import java.util.Scanner;
 
 public class ConsoleInput {
@@ -74,6 +73,7 @@ public class ConsoleInput {
     }
 
     public static void addCarFromJSON (Scanner scanner) {
+
         System.out.println("Введите имя файла в папке ресурсов (например: car.json):");
 
         String fileName = scanner.nextLine().trim();

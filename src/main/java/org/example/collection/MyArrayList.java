@@ -22,7 +22,7 @@ public class MyArrayList<T>  {
 
     public T remove(int index) {
         checkIndex(index);
-        T removed = (T) array[index];
+        T removed = (T)array[index];
 
         for (int i = index; i < pointer - 1; i++) {
             array[i] = array[i + 1];
@@ -56,7 +56,6 @@ public class MyArrayList<T>  {
         if (newLength < pointer) {
             throw new IllegalArgumentException("Новый размер меньше количества элементов");
         }
-
         Object[] newArray = new Object[newLength];
         System.arraycopy(array, 0, newArray, 0, pointer);
         array = newArray;
