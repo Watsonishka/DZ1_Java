@@ -1,0 +1,27 @@
+[
+  {
+    "model": "Lada",
+    "power": 150.0,
+    "manufacturedYear": 2023
+  },
+  {
+    "model": "Lada333",
+    "power": -50.0,
+    "manufacturedYear": 209
+  },
+  {
+    "model": "Lada3333",
+    "power": 150.0,
+    "manufacturedYear": 2090000
+  },
+  {
+    "model": "",
+    "power": 150.0,
+    "manufacturedYear": 2090
+  },
+  {
+    "model": "JEEP",
+    "power": 150.0,
+    "manufacturedYear": 2027
+  }
+]
