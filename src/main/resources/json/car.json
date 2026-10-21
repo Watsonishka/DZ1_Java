@@ -9,5 +9,10 @@
     "power": 250.0,
     "manufacturedYear": 2020
   },
+  {
+    "model": "BMW",
+    "power": 250.0,
+    "manufacturedYear": 2025
+  },
   null
 ]

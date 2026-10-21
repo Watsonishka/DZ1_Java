@@ -57,12 +57,21 @@ public class ConsoleMainMenu {
             if (answer == 1) {
                 System.out.println("Введите название модели (или часть названия):");
                 String query = scanner.nextLine().trim().toLowerCase();
+
+                if (query.isEmpty()) {
+                    System.out.println("Вы ничего не ввели. Поиск отменен.");
+                    continue;
+                }
                 predicate = car -> car.getModel().toLowerCase().contains(query);
             }
             else if (answer == 2) {
                 System.out.println("Введите минимальную мощность (число):");
                 try {
                     double minPower = Double.parseDouble(scanner.nextLine().trim().replace(',', '.'));
+                    if (!Double.isFinite(minPower) || minPower <= 0) {
+                        System.out.println("Критерий по мощности не может быть меньше или равно 0. Поиск отменен.");
+                        continue;
+                    }
                     predicate = car -> car.getPower() >= minPower;
                 }
                 catch (NumberFormatException e) {
