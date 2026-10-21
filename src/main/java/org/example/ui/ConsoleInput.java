@@ -4,6 +4,7 @@ import org.example.model.CarFormatter;
 import org.example.model.CarRepository;
 import org.example.model.CarValidator;
 import org.example.collection.MyArrayList;
+import java.time.Year;
 import java.util.Scanner;
 
 public class ConsoleInput {
@@ -42,7 +43,7 @@ public class ConsoleInput {
 
             int manufacturedYear;
             System.out.println("Введите год выпуска машины (четыре цифры, начиная с 19):");
-            manufacturedYear = getInt(scanner, 1900, 9999);
+            manufacturedYear = getInt(scanner, 1900, Year.now().getValue());
 
             Car car = new Car(model, power, manufacturedYear);
             Boolean confirmed = getConfirmation(scanner,
@@ -52,7 +53,6 @@ public class ConsoleInput {
 
             if (!confirmed) {
                 System.out.println("Добавление отменено.");
-
                 var retry = getConfirmation(scanner, "Хотите добавить машину? Да/Нет");
                 if (retry) {
                     continue;
@@ -74,47 +74,55 @@ public class ConsoleInput {
 
     public static void addCarFromJSON (Scanner scanner) {
 
-        System.out.println("Введите имя файла в папке ресурсов (например: car.json):");
+        while (true){
+            System.out.println("Введите имя файла в папке ресурсов (например: car.json):");
+            String fileName = scanner.nextLine().trim();
+            if (fileName.isEmpty()) {
+                System.out.println("Имя файла не может быть пустым.");
+                return;
+            }
 
-        String fileName = scanner.nextLine().trim();
-        if (fileName.isEmpty()) {
-            System.out.println("Имя файла не может быть пустым.");
-            return;
-        }
+            MyArrayList<Car> cars = CarRepository.getCarsFromFile(fileName);
 
-        MyArrayList<Car> cars = CarRepository.getCarsFromFile(fileName);
+            if (cars == null || cars.isEmpty()) {
+                System.out.println("Файл пуст или содержит некорректные данные.");
+                return;
+            }
 
-        if (cars == null || cars.isEmpty()) {
-            System.out.println("Файл пуст или содержит некорректные данные.");
-            return;
-        }
+            MyArrayList<Car> validCars = new MyArrayList<>();
+            for (int i = 0; i < cars.size(); i++) {
 
-        MyArrayList<Car> validCars = new MyArrayList<>();
-        for (int i = 0; i < cars.size(); i++) {
-            Car car = cars.get(i);
-            if (CarValidator.isValidCar(car)) {
-                validCars.add(car);
-            } else {
-                System.out.println("Предупреждение: найден некорректный объект");
+                Car car = cars.get(i);
+                if (CarValidator.isValidCar(car)) {
+                    validCars.add(car);
+                }
+                else {
+                    System.out.println("Предупреждение: найден некорректный объект");
+                }
+            }
+
+            if (validCars.isEmpty()) {
+                System.out.println("В файле нет ни одного валидного объекта для добавления. Попробуйте изменить данные файла");
+                return;
+            }
+
+            System.out.println("Полученный результат (прошедший валидацию):");
+            System.out.println(CarFormatter.getCarDescriptions(validCars));
+
+            boolean confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
+            if (!confirmed) {
+                System.out.println("Добавление отменено.");
+                return;
+            }
+
+            CarRepository.addCars(validCars);
+            System.out.println("Добавление объектов выполнено успешно!");
+
+            Boolean addMore = getConfirmation(scanner, "Хотите добавить ещё? Да/Нет");
+            if (!addMore) {
+                break;
             }
         }
-
-        if (validCars.isEmpty()) {
-            System.out.println("В файле нет ни одного валидного объекта для добавления. Попробуйте изменить данные файла");
-            return;
-        }
-
-        System.out.println("Полученный результат (прошедший валидацию):");
-        System.out.println(CarFormatter.getCarDescriptions(validCars));
-
-        boolean confirmed = getConfirmation(scanner, "Подтверждаешь сохранение вышеуказанных объектов? Да/Нет");
-        if (!confirmed) {
-            System.out.println("Добавление отменено.");
-            return;
-        }
-
-        CarRepository.addCars(validCars);
-        System.out.println("Добавление объектов выполнено успешно!");
     }
 
     public static int getInt(Scanner scanner, int min, int max) {

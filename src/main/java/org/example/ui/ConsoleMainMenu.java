@@ -15,7 +15,6 @@ public class ConsoleMainMenu {
     public static void getMenuChoice() {
 
         Scanner scanner = new Scanner(System.in);
-
         while (true) {
             show();
             int answer = ConsoleInput.getInt(scanner, 0, 5);
@@ -55,7 +54,6 @@ public class ConsoleMainMenu {
             }
 
             Predicate<Car> predicate = null;
-
             if (answer == 1) {
                 System.out.println("Введите название модели (или часть названия):");
                 String query = scanner.nextLine().trim().toLowerCase();
@@ -118,10 +116,7 @@ public class ConsoleMainMenu {
         }
     }
 
-    private static SortAlgorithm<Car> selectAlgorithm(int choice) {
-
-        return (choice == 1) ? new BubbleSort<>() : new InsertionSort<>();
-    }
+    private static SortAlgorithm<Car> selectAlgorithm(int choice) {return (choice == 1) ? new BubbleSort<>() : new InsertionSort<>();}
 
     private static Comparator<Car> selectComparator(int choice) {
 
@@ -138,10 +133,10 @@ public class ConsoleMainMenu {
         while (true) {
             showComparatorChoiceMenu();
             int answer = ConsoleInput.getInt(scanner, 0, 3);
-
             if (answer == 0) {
                 return null;
             }
+
             Comparator<Car> comparator = selectComparator(answer);
             if (comparator == null) {
                 continue;
@@ -155,6 +150,7 @@ public class ConsoleMainMenu {
             if (dirAnswer == 2) {
                 comparator = comparator.reversed();
             }
+
             return comparator;
         }
     }
@@ -163,7 +159,8 @@ public class ConsoleMainMenu {
 
         if (cars == null || cars.isEmpty()) {
             System.out.println("Коллекция пуста. Воспользуйтесь возможностью добавления новых объектов");
-        } else {
+        }
+        else {
             System.out.println(CarFormatter.getCarDescriptions(cars));
         }
     }

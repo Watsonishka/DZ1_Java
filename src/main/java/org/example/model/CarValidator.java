@@ -1,6 +1,8 @@
 package org.example.model;
+import java.time.Year;
 
 public class CarValidator {
+
     public static boolean isValidModel(String model) {
         return model != null && !model.isBlank();
     }
@@ -10,7 +12,9 @@ public class CarValidator {
     }
 
     public static boolean isValidYear(int year) {
-        return year >= 1900 && year <= 9999;
+
+        int currentYear = Year.now().getValue();
+        return year >= 1900 && year <= currentYear;
     }
 
     public static boolean isValidCar(Car car) {

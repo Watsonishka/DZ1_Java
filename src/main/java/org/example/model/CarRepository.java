@@ -2,6 +2,8 @@ package org.example.model;
 import org.example.helpers.FileManager;
 import org.example.collection.MyArrayList;
 import org.example.sort.SortAlgorithm;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.function.Predicate;
 
@@ -10,6 +12,7 @@ public class CarRepository {
     private static final MyArrayList<Car> cars = new MyArrayList<>();
 
     public static MyArrayList<Car> getAll() {
+
         MyArrayList<Car> copy = new MyArrayList<>();
         for (int i = 0; i < cars.size(); i++) {
             copy.add(cars.get(i));
@@ -18,12 +21,14 @@ public class CarRepository {
     }
 
     public static void addCar(Car car){
+
         if (car != null) {
             cars.add(car);
         }
     }
 
     public static void addCars(MyArrayList<Car> newCars) {
+
         if (newCars == null) {
             return;
         }
@@ -35,10 +40,13 @@ public class CarRepository {
     }
 
     public static MyArrayList<Car> getCarsFromFile(String resourceName) {
-        return FileManager.getFromFile(resourceName, Car.class);
+
+        Path path = Paths.get("src", "main", "resources", "json", resourceName);
+        return FileManager.getFromFile(path, Car.class);
     }
 
     public static MyArrayList<Car> filter(Predicate<Car> predicate) {
+
         if (predicate == null) {
             throw new IllegalArgumentException("Критерий фильтрации не задан");
         }

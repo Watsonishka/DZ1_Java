@@ -5,16 +5,14 @@ import org.example.collection.MyArrayList;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 public class FileManager {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public static <T> MyArrayList<T> getFromFile(String resourceName, Class<T> type)
+    public static <T> MyArrayList<T> getFromFile(Path path, Class<T> type)
     {
-        Path path = Paths.get("src", "main", "resources", "json", resourceName);
         if (!Files.exists(path)) {
             System.out.println("Файл не найден по пути: " + path.toAbsolutePath());
             return new MyArrayList<>();
@@ -26,7 +24,9 @@ public class FileManager {
             MyArrayList<T> myArrayList = new MyArrayList<>();
 
             for (T item : standardList) {
-                myArrayList.add(item);
+                if (item != null) {
+                    myArrayList.add(item);
+                }
             }
             return myArrayList;
 

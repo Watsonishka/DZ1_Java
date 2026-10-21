@@ -1,0 +1,12 @@
+[
+  {
+    "model": "Toyota",
+    "power": 150.0,
+    "manufacturedYear": 20100000000000000000000
+  },
+  {
+    "model": "BMW X5",
+    "power": 250.0,
+    "manufacturedYear": 2020
+  }
+]

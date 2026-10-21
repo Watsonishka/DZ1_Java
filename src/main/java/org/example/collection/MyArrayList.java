@@ -1,16 +1,24 @@
 package org.example.collection;
+import java.util.Objects;
 import java.util.stream.Stream;
 import java.util.stream.IntStream;
 
 public class MyArrayList<T>  {
+
     private static final int INIT_SIZE = 16;
     private static final int CUT_RATE = 4;
+    private static final int GROWTH_FACTOR = 2;
     private Object[] array = new Object[INIT_SIZE];
     private int pointer = 0;
 
     public void add(T item) {
+
+        if (item == null) {
+            throw new IllegalArgumentException("Элемент не может быть null");
+        }
+
         if (pointer == array.length) {
-            resize(array.length * 2);
+            resize(array.length * GROWTH_FACTOR);
         }
         array[pointer++] = item;
     }
@@ -30,7 +38,7 @@ public class MyArrayList<T>  {
         array[--pointer] = null;
 
         if (array.length > INIT_SIZE && pointer < array.length / CUT_RATE) {
-            resize(Math.max(INIT_SIZE, array.length / 2));
+            resize(Math.max(INIT_SIZE, array.length / GROWTH_FACTOR));
         }
         return removed;
     }
@@ -43,11 +51,13 @@ public class MyArrayList<T>  {
         return pointer == 0;
     }
 
-    public Stream<T> stream() {
-        return IntStream.range(0, pointer).mapToObj(i -> (T) array[i]);
-    }
+    public Stream<T> stream() {return IntStream.range(0, pointer).mapToObj(i -> (T) array[i]);}
 
     public void set(int index, T item) {
+
+        if (item == null) {
+            throw new IllegalArgumentException("Элемент не может быть null");
+        }
         checkIndex(index);
         array[index] = item;
     }
