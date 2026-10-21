@@ -22,8 +22,8 @@
 
 - Java
 - Gradle
-- Jackson — чтение JSON
-- Java Collections API и Stream API
+- Jackson
+- Stream API
 
 ## Структура проекта
 
