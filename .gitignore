@@ -5,8 +5,12 @@
 **/build/
 .kotlin/
 
-# Gradle Wrapper — оставить в Git
-!gradle/wrapper/gradle-wrapper.jar
+# ==============================
+# Gradle Wrapper
+# Wrapper files должны оставаться в репозитории
+# gradlew, gradlew.bat и gradle/wrapper/
+# Не игнорировать!
+# ==============================
 
 # ==============================
 # Java
