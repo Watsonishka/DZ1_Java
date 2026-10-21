@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import org.example.collection.MyArrayList;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -18,9 +19,9 @@ public class FileManager {
             return new MyArrayList<>();
         }
 
-        try {
-            CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(List.class, type);
-            List<T> standardList = objectMapper.readValue(path.toFile(), listType);
+        try (InputStream inputStream = Files.newInputStream(path)){
+        CollectionType listType = objectMapper.getTypeFactory().constructCollectionType(List.class, type);
+            List<T> standardList = objectMapper.readValue(inputStream, listType);
             MyArrayList<T> myArrayList = new MyArrayList<>();
 
             for (T item : standardList) {
@@ -29,7 +30,6 @@ public class FileManager {
                 }
             }
             return myArrayList;
-
         }
         catch (IOException e) {
             System.out.println("Ошибка при чтении или разборе файла: " + e.getMessage());
